@@ -1,0 +1,4 @@
+beakerx
+jpype1
+jupyterlab
+seaborn
