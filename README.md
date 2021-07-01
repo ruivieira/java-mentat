@@ -13,3 +13,7 @@ Java AI/ML/DS library.
 ## Graph theory
 
 - Erdős–Rényi model
+
+## Metrics
+
+- Receiver operating characteristic (ROC)
