@@ -20,6 +20,8 @@ except OSError:
 
 from network.models import ErdosRenyi as _ErdosRenyi
 from explainability.fairness import CounterfactualFairness as _CounterfactualFairness
+from metrics import ROC as _ROC
 
 CounterfactualFairness = _CounterfactualFairness
 ErdosRenyi = _ErdosRenyi
+ROC = _ROC
