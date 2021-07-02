@@ -3,11 +3,12 @@ package metrics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static metrics.Confusion.NEGATIVE_LABEL;
+import static metrics.Confusion.POSITIVE_LABEL;
+
 public class ROC {
 
     private static final Logger logger = LoggerFactory.getLogger(ROC.class);
-    private static final int POSITIVE_LABEL = 1;
-    private static final int NEGATIVE_LABEL = 0;
     protected int numberOfPoints;
     private final double[] falsePositiveRates;
     private final double[] truePositiveRates;
