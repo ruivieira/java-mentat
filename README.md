@@ -9,6 +9,7 @@ Java AI/ML/DS library.
 ### Explainability
 
 - Counterfactually fair models
+- Fairness metrics (TPR)
 
 ## Graph theory
 
