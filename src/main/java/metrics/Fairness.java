@@ -9,6 +9,7 @@ public class Fairness {
     private final String priviledgedName;
     private final ConfusionMatrix priviledgedMatrix;
     private final Map<String, Double> TPR = new HashMap<>();
+    private final Map<String, Double> FPR = new HashMap<>();
     private final Map<String, Double> PPV = new HashMap<>();
     private final Map<String, Double> accuracy = new HashMap<>();
     private double epsilon = 0.8;
@@ -44,22 +45,38 @@ public class Fairness {
     }
 
     public void check() {
-        final double priviledgeTPR =
-                Confusion.truePositiveRate(priviledgedMatrix.getTruePositives(), priviledgedMatrix.getFalseNegatives());
+        final double priviledgeTPR = Confusion.truePositiveRate(priviledgedMatrix);
+        final double priviledgeAccuracy = Confusion.accuracy(priviledgedMatrix);
+        final double priviledgePPV = Confusion.positivePredictiveValue(priviledgedMatrix);
+        final double priviledgeFPR = Confusion.falsePositiveRate(priviledgedMatrix);
 
         for (Map.Entry<String, ConfusionMatrix> protectedGroup : this.subgroups.entrySet()) {
             final ConfusionMatrix matrix = protectedGroup.getValue();
             final String name = protectedGroup.getKey();
+
+            // True positive rate ratios
             final double protectedTPR = Confusion.truePositiveRate(matrix);
-            this.TPR.put(name, protectedTPR);
+            this.TPR.put(name, protectedTPR / priviledgeTPR);
+
+            // Accuracy ratios
             final double protectedAccuracy = Confusion.accuracy(matrix);
-            this.accuracy.put(name, protectedAccuracy);
+            this.accuracy.put(name, protectedAccuracy / priviledgeAccuracy);
+
+            // Positive predictive value ratios
             final double protectedPPV = Confusion.positivePredictiveValue(matrix);
-            this.PPV.put(name, protectedPPV);
+            this.PPV.put(name, protectedPPV / priviledgePPV);
+
+            // False positive rate ratios
+            final double protectedFPR = Confusion.falsePositiveRate(matrix);
+            this.FPR.put(name, protectedFPR / priviledgeFPR);
         }
     }
 
     public Map<String, Double> getPPV() {
         return PPV;
+    }
+
+    public Map<String, Double> getFPR() {
+        return FPR;
     }
 }
