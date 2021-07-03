@@ -13,8 +13,16 @@ public class Confusion {
         return truePositives / (truePositives + falseNegatives);
     }
 
+    public static double truePositiveRate(ConfusionMatrix matrix) {
+        return truePositiveRate(matrix.getTruePositives(), matrix.getFalseNegatives());
+    }
+
     public static double falsePositiveRate(double trueNegatives, double falsePositives) {
         return 1.0 - (trueNegatives / (falsePositives + trueNegatives));
+    }
+
+    public static double falsePositiveRate(ConfusionMatrix matrix) {
+        return falsePositiveRate(matrix.getTrueNegatives(), matrix.getFalsePositives());
     }
 
     public static ConfusionMatrix matrix(int[] labels, double[] probabilities) {
