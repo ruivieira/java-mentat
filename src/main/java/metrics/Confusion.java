@@ -25,6 +25,12 @@ public class Confusion {
         return falsePositiveRate(matrix.getTrueNegatives(), matrix.getFalsePositives());
     }
 
+    public static double accuracy(ConfusionMatrix matrix) {
+        final double trueSum = matrix.getTruePositives() + matrix.getTrueNegatives();
+        final double falseSum = matrix.getFalsePositives() + matrix.getFalseNegatives();
+        return (trueSum) / (trueSum + falseSum);
+    }
+
     public static ConfusionMatrix matrix(int[] labels, double[] probabilities) {
 
         if (labels.length != probabilities.length) {

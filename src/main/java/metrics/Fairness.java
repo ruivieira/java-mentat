@@ -9,6 +9,7 @@ public class Fairness {
     private final String priviledgedName;
     private final ConfusionMatrix priviledgedMatrix;
     private final Map<String, Double> TPR = new HashMap<>();
+    private final Map<String, Double> accuracy = new HashMap<>();
     private double epsilon = 0.8;
 
     private Fairness(String priviledgedName, int[] priviledgedLabels, double[] priviledgedProbabilities) {
@@ -18,6 +19,10 @@ public class Fairness {
 
     public static Fairness create(String priviledgedName, int[] priviledgedLabels, double[] priviledgedProbabilities) {
         return new Fairness(priviledgedName, priviledgedLabels, priviledgedProbabilities);
+    }
+
+    public Map<String, Double> getAccuracy() {
+        return accuracy;
     }
 
     public Map<String, Double> getTPR() {
@@ -38,12 +43,16 @@ public class Fairness {
     }
 
     public void check() {
-        final double priviledgeTPR = Confusion.truePositiveRate(priviledgedMatrix.getTruePositives(), priviledgedMatrix.getFalseNegatives());
-
+        final double priviledgeTPR =
+                Confusion.truePositiveRate(priviledgedMatrix.getTruePositives(), priviledgedMatrix.getFalseNegatives());
 
         for (Map.Entry<String, ConfusionMatrix> protectedGroup : this.subgroups.entrySet()) {
-            final double protectedTPR = Confusion.truePositiveRate(protectedGroup.getValue().getTruePositives(), protectedGroup.getValue().getFalseNegatives());
-            this.TPR.put(protectedGroup.getKey(), protectedTPR);
+            final ConfusionMatrix matrix = protectedGroup.getValue();
+            final String name = protectedGroup.getKey();
+            final double protectedTPR = Confusion.truePositiveRate(matrix);
+            this.TPR.put(name, protectedTPR);
+            final double protectedAccuracy = Confusion.accuracy(matrix);
+            this.accuracy.put(name, protectedAccuracy);
         }
     }
 }
