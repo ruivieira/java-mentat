@@ -17,7 +17,7 @@ public class Confusion {
         return 1.0 - (trueNegatives / (falsePositives + trueNegatives));
     }
 
-    public static Matrix matrix(int[] labels, double[] probabilities) {
+    public static ConfusionMatrix matrix(int[] labels, double[] probabilities) {
 
         if (labels.length != probabilities.length) {
             final String message = "Labels and probabilities must have the same size";
@@ -53,7 +53,7 @@ public class Confusion {
                 }
             }
         }
-        return new Matrix(_truePositives, _trueNegatives, _falseNegatives, _falsePositives);
+        return new ConfusionMatrix(_truePositives, _trueNegatives, _falseNegatives, _falsePositives);
     }
 
 }

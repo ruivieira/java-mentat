@@ -3,13 +3,11 @@ package metrics;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.math3.linear.RealMatrix;
-
 public class Fairness {
 
-    private final Map<String, Matrix> subgroups = new HashMap<>();
+    private final Map<String, ConfusionMatrix> subgroups = new HashMap<>();
     private final String priviledgedName;
-    private final Matrix priviledgedMatrix;
+    private final ConfusionMatrix priviledgedMatrix;
     private final Map<String, Double> TPR = new HashMap<>();
     private double epsilon = 0.8;
 
@@ -27,7 +25,7 @@ public class Fairness {
     }
 
     public void addProtectedGroup(String name, int[] labels, double[] probabilities) {
-        final Matrix confusion = Confusion.matrix(labels, probabilities);
+        final ConfusionMatrix confusion = Confusion.matrix(labels, probabilities);
         subgroups.put(name, confusion);
     }
 
@@ -43,7 +41,7 @@ public class Fairness {
         final double priviledgeTPR = Confusion.truePositiveRate(priviledgedMatrix.getTruePositives(), priviledgedMatrix.getFalseNegatives());
 
 
-        for (Map.Entry<String, Matrix> protectedGroup : this.subgroups.entrySet()) {
+        for (Map.Entry<String, ConfusionMatrix> protectedGroup : this.subgroups.entrySet()) {
             final double protectedTPR = Confusion.truePositiveRate(protectedGroup.getValue().getTruePositives(), protectedGroup.getValue().getFalseNegatives());
             this.TPR.put(protectedGroup.getKey(), protectedTPR);
         }

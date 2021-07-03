@@ -1,13 +1,13 @@
 package metrics;
 
-public class Matrix {
+public class ConfusionMatrix {
 
     private final int truePositives;
     private final int trueNegatives;
     private final int falseNegatives;
     private final int falsePositives;
 
-    public Matrix(int truePositives, int trueNegatives, int falseNegatives, int falsePositives) {
+    public ConfusionMatrix(int truePositives, int trueNegatives, int falseNegatives, int falsePositives) {
         this.truePositives = truePositives;
         this.trueNegatives = trueNegatives;
         this.falseNegatives = falseNegatives;
