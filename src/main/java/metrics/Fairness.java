@@ -9,6 +9,7 @@ public class Fairness {
     private final String priviledgedName;
     private final ConfusionMatrix priviledgedMatrix;
     private final Map<String, Double> TPR = new HashMap<>();
+    private final Map<String, Double> PPV = new HashMap<>();
     private final Map<String, Double> accuracy = new HashMap<>();
     private double epsilon = 0.8;
 
@@ -53,6 +54,12 @@ public class Fairness {
             this.TPR.put(name, protectedTPR);
             final double protectedAccuracy = Confusion.accuracy(matrix);
             this.accuracy.put(name, protectedAccuracy);
+            final double protectedPPV = Confusion.positivePredictiveValue(matrix);
+            this.PPV.put(name, protectedPPV);
         }
+    }
+
+    public Map<String, Double> getPPV() {
+        return PPV;
     }
 }

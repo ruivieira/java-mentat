@@ -31,6 +31,10 @@ public class Confusion {
         return (trueSum) / (trueSum + falseSum);
     }
 
+    public static double positivePredictiveValue(ConfusionMatrix matrix) {
+        return (double) matrix.getTruePositives() / (double) (matrix.getTruePositives() + matrix.getFalsePositives());
+    }
+
     public static ConfusionMatrix matrix(int[] labels, double[] probabilities) {
 
         if (labels.length != probabilities.length) {
