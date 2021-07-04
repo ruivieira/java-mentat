@@ -1,4 +1,4 @@
-beakerx
 jpype1
 jupyterlab
+radar-chart
 seaborn

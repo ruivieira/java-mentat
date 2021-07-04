@@ -12,6 +12,13 @@ public class Fairness {
     private final Map<String, Double> FPR = new HashMap<>();
     private final Map<String, Double> PPV = new HashMap<>();
     private final Map<String, Double> accuracy = new HashMap<>();
+
+    // Parity loss
+    private double parityLossTPR = 0.0;
+    private double parityAccuracy = 0.0;
+    private double parityLossPPV = 0.0;
+    private double parityLossFPR = 0.0;
+
     private double epsilon = 0.8;
 
     private Fairness(String priviledgedName, int[] priviledgedLabels, double[] priviledgedProbabilities) {
@@ -56,19 +63,27 @@ public class Fairness {
 
             // True positive rate ratios
             final double protectedTPR = Confusion.truePositiveRate(matrix);
-            this.TPR.put(name, protectedTPR / priviledgeTPR);
+            final double ratioTPR = protectedTPR / priviledgeTPR;
+            this.TPR.put(name, ratioTPR);
+            parityLossTPR += Math.abs(Math.log(ratioTPR));
 
             // Accuracy ratios
             final double protectedAccuracy = Confusion.accuracy(matrix);
-            this.accuracy.put(name, protectedAccuracy / priviledgeAccuracy);
+            final double ratioAccuracy = protectedAccuracy / priviledgeAccuracy;
+            this.accuracy.put(name, ratioAccuracy);
+            parityAccuracy += Math.abs(Math.log(ratioAccuracy));
 
             // Positive predictive value ratios
             final double protectedPPV = Confusion.positivePredictiveValue(matrix);
-            this.PPV.put(name, protectedPPV / priviledgePPV);
+            final double ratioPPV = protectedPPV / priviledgePPV;
+            this.PPV.put(name, ratioPPV);
+            parityLossPPV += Math.abs(Math.log(ratioPPV));
 
             // False positive rate ratios
             final double protectedFPR = Confusion.falsePositiveRate(matrix);
-            this.FPR.put(name, protectedFPR / priviledgeFPR);
+            final double ratioFPR = protectedFPR / priviledgeFPR;
+            this.FPR.put(name, ratioFPR);
+            parityLossFPR += Math.abs(Math.log(ratioFPR));
         }
     }
 
@@ -78,5 +93,21 @@ public class Fairness {
 
     public Map<String, Double> getFPR() {
         return FPR;
+    }
+
+    public double getParityLossTPR() {
+        return parityLossTPR;
+    }
+
+    public double getParityAccuracy() {
+        return parityAccuracy;
+    }
+
+    public double getParityLossPPV() {
+        return parityLossPPV;
+    }
+
+    public double getParityLossFPR() {
+        return parityLossFPR;
     }
 }
