@@ -1,5 +1,8 @@
 package metrics;
 
+import java.util.Arrays;
+import java.util.function.DoublePredicate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +36,16 @@ public class Confusion {
 
     public static double positivePredictiveValue(ConfusionMatrix matrix) {
         return (double) matrix.getTruePositives() / (double) (matrix.getTruePositives() + matrix.getFalsePositives());
+    }
+
+    public static double statisticalParityDifference(double[] probabilitiesGroupA, double[] probabilitiesGroupB) {
+
+        final DoublePredicate threshold = p -> p >= 0.5;
+
+        final double pctA = Arrays.stream(probabilitiesGroupA).filter(threshold).sum() / (double) probabilitiesGroupA.length;
+        final double pctB = Arrays.stream(probabilitiesGroupB).filter(threshold).sum() / (double) probabilitiesGroupB.length;
+
+        return pctA - pctB;
     }
 
     public static ConfusionMatrix matrix(int[] labels, double[] probabilities) {
