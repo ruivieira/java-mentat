@@ -1,7 +1,8 @@
 import sys
 import jpype
 import jpype.imports
-
+import pandas as pd
+import numpy as np
 
 path=[
     "../target/mentat-0.0.1-jar-with-dependencies.jar",
