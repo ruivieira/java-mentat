@@ -50,6 +50,7 @@
     <properties>
         <commons.math.version>3.6.1</commons.math.version>
         <slf4j.version>1.7.31</slf4j.version>
+        <tablesaw.version>0.38.1</tablesaw.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>${commons.math.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.tablesaw</groupId>
+            <artifactId>tablesaw-core</artifactId>
+            <version>${tablesaw.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
