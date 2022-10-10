@@ -14,10 +14,7 @@ public class RBF implements Kernel {
 
     @Override
     public double K(double[] x1, double[] x2) {
-        final double sum = IntStream.range(0, x1.length).mapToDouble(i -> {
-            double v = x1[i] - x2[i];
-            return v * v;
-        }).sum();
+        final double sum = squaredSum(x1, x2);
         return variance * Math.exp(-0.5 * sum / squaredLengthscale);
     }
 }
