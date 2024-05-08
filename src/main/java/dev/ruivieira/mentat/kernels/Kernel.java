@@ -6,6 +6,7 @@ public interface Kernel {
 
     /**
      * Calculate the Kernel's value for points x1 and x2
+     *
      * @param x1 Point x1 as an array
      * @param x2 Point x2 as an array
      * @return The Kernel's value for points x1 and x2
@@ -18,4 +19,7 @@ public interface Kernel {
             return v * v;
         }).sum();
     }
+
+    double calculateHyperparamDerivative(double[] x, double y[], int hp);
+
 }
