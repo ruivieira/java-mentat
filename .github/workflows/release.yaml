@@ -1,8 +1,9 @@
 name: Release JAR Snapshot
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
+    branches:
+      - master
 
 jobs:
   release:
