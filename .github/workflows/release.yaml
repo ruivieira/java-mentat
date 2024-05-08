@@ -26,8 +26,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: snapshot-${{ github.sha }}
-          release_name: Snapshot ${{ github.sha }}
+          tag_name: snapshot-latest
+          release_name: Snapshot Latest
           draft: false
           prerelease: true
 
